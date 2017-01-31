@@ -33,6 +33,24 @@ var getRestartCount = function(pod) {
 };
 
 
+var showLabels = function(labels) {
+  var labelArray = [];
+  for (var key in labels){
+    labelArray.push(
+      <div className="pod-label" key={key}>
+        <Link to={"/pods/label/"+ key +"/" + labels[key]}>{key}: {labels[key]}</Link>
+      </div>
+    );
+  }
+  return (
+    <div>
+      Labels:
+      { labelArray }
+    </div>
+  );
+};
+
+
 export default React.createClass({
   getInitialState: function() {
     return {
@@ -63,7 +81,8 @@ export default React.createClass({
             'phase': pod.status.phase,
             'restartCount': restartCount,
             'startTime': pod.status.startTime,
-            'reason': getStatus(pod)
+            'reason': getStatus(pod),
+            'labels': pod.metadata.labels
           };
 
           var nodeName = pod.spec.nodeName;
@@ -100,6 +119,7 @@ export default React.createClass({
                   <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
                   {pod.image}<br/>
                   NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
+                  {showLabels(pod.labels)}
                   CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
                   Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
                   <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
