@@ -1,0 +1,6 @@
+*.iml
+.idea/
+.serverless
+build
+node_modules
+bundle.js
