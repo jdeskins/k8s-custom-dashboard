@@ -1,12 +1,25 @@
 import React from 'react'
+import Namespaces from './Namespaces'
 
 
 export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Dashboard Home</h1>
-        <p>This is a work in progress for a custom dashboard for display cluster data and status.</p>
+        <h1>Custom Dashboard</h1>
+        <div className="col-md-8">
+          <p>Custom dashboard to display cluster information and status.</p>
+          <p>
+            This uses the credentials currently used by your local kubectl command.
+            Use that command to change clusters or set the KUBECONFIG environment variable to point
+            to the cluster config file.
+          </p>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <Namespaces/>
+          </div>
+        </div>
       </div>
     )
   }
