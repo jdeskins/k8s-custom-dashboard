@@ -15,12 +15,16 @@ git clone https://github.com/jdeskins/k8s-custom-dashboard.git
 cd k8s-custom-dashboard
 ```
 
-Build the project files.
+Build the javascript files.
 ```
 npm install
 npm run build
-kubectl proxy --www=.
 ``` 
+
+Create the proxy to Kubernetes API.
+```
+kubectl proxy --www=.
+```
 
 Open browser to <http://localhost:8001/static/> to see the custom dashboard.
 The default port is 8001. 
