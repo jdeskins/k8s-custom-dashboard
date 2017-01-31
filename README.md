@@ -31,4 +31,4 @@ npm run build
 kubectl proxy --www=.
 ``` 
 
-Open browser to http://localhost:8001/static/ to see the custom dashboard.
+Open browser to <http://localhost:8001/static/> to see the custom dashboard.
