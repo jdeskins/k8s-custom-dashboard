@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 import App from './modules/App'
 import About from './modules/About'
+import Deployments from './modules/Deployments'
 import Events from './modules/Events'
 import Home from './modules/Home'
 import Log from './modules/Log'
@@ -19,6 +20,7 @@ render((
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="/about" component={About}/>
+      <Route path="/deployments" component={Deployments}/>
       <Route path="/events" component={Events}/>
       <Route path="/namespaces" component={Namespaces}/>
       <Route path="/namespaces/:namespace/events" component={NSEvents}/>

@@ -34,6 +34,7 @@ export default React.createClass({
           <section className="sidebar">
             <ul role="nav" className="sidebar-menu">
               <li className="header">MAIN NAVIGATION</li>
+              <li><NavLink to="/deployments">Deployments</NavLink></li>
               <li><NavLink to="/namespaces">Namespaces</NavLink></li>
               <li><NavLink to="/events">All Events</NavLink></li>
               <li><NavLink to="/pods">All Pods</NavLink></li>
