@@ -1,6 +1,5 @@
-# k8s-dashboard
+# k8s-custom-dashboard
 
-Work in progress.
 
 ## Proxy Kubernetes API Server
 
@@ -18,6 +17,14 @@ Now when running `kubectl` commands, it will use the credentials in the file pro
 ## Run Dashboard Locally
 This will build the necessary project files on your local machine.
 The kubectl proxy command will start an internal server using the static dashboard files.
+
+Clone this repo:
+```
+git clone https://github.com/jdeskins/k8s-custom-dashboard.git
+cd k8s-custom-dashboard
+```
+
+Build the project files.
 ```
 npm install
 npm run build
