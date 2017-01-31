@@ -50,6 +50,19 @@ var getRestartStyle = function (count) {
   }
 };
 
+var showLabels = function(labels) {
+  var labelArray = [];
+  for (var key in labels){
+    labelArray.push(<div className="pod-label" key={key}>{key}: {labels[key]}</div>);
+  }
+  return (
+    <div>
+      Labels:
+      { labelArray }
+    </div>
+  );
+};
+
 var isWarningState = function(pod){
   // TODO: add pending status
   const restartCount = getRestartCount(pod);
@@ -114,7 +127,8 @@ export default React.createClass({
             'phase': pod.status.phase,
             'restartCount': restartCount,
             'startTime': pod.status.startTime,
-            'reason': getStatus(pod)
+            'reason': getStatus(pod),
+            'labels': pod.metadata.labels
           };
 
           if (isWarningState(pod)) {
@@ -201,6 +215,7 @@ export default React.createClass({
                   <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
                   {pod.image}<br/>
                   NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
+                  {showLabels(pod.labels)}
                   CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
                   Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
                   <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>

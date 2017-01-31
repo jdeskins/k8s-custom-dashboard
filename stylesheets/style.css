@@ -134,6 +134,9 @@ pre {font-size:0.8em;}
     border-radius: 0.5em;
     overflow: hidden;
 }
+.pod-label  {
+    padding-left: 10px;
+}
 .pod .warning, .pod .pending {
     background-color: red;
     color: white;
