@@ -22,8 +22,6 @@ Open browser to <http://localhost:8001/static/> to see the custom dashboard.
 
 
 ## Proxy Kubernetes API Server
-
-Clone this repository and build the project files.
 Running the kubectl proxy command will run a proxy to the Kubernetes API server using
 the credentials in ~/.kube/config file.
 
