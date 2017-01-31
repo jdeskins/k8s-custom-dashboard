@@ -2,6 +2,9 @@
 
 
 ## Run Custom Kubernetes Dashboard Locally
+
+![Screenshot](screenshot.png)
+
 This will build the necessary project files on your local machine.
 The kubectl proxy command will start an internal server using the static dashboard files.
 
