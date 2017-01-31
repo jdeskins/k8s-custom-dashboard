@@ -15,9 +15,7 @@ export default React.createClass({
     return (
       <div>
         <header className="main-header">
-          <a href="/#/" className="logo">
-            <span className="logo-lg">Kube Dashboard 2</span>
-          </a>
+          <Link to={"/"}><div className="logo">Kube Dashboard</div></Link>
           <nav className="navbar navbar-static-top">
             <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
               <span className="sr-only">Toggle navigation</span>
