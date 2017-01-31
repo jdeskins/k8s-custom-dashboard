@@ -5,8 +5,14 @@
 
 ![Screenshot](screenshot.png)
 
-This will create the necessary html and javascript files 
-to run the dashboard from your local machine.
+View:
+* Namespaces
+* Events
+* Pods running on Nodes
+* Pods by Namespace or Label
+
+This project will create the necessary html and javascript files 
+to run the dashboard on your local machine.
 The kubectl proxy command will start an internal server using the static dashboard files.
 
 Clone this repo:
