@@ -1,7 +1,7 @@
 # k8s-custom-dashboard
 
 
-## Run Dashboard Locally
+## Run Custom Kubernetes Dashboard Locally
 This will build the necessary project files on your local machine.
 The kubectl proxy command will start an internal server using the static dashboard files.
 
@@ -19,6 +19,7 @@ kubectl proxy --www=.
 ``` 
 
 Open browser to <http://localhost:8001/static/> to see the custom dashboard.
+The default port is 8001. 
 
 
 ## Proxy Kubernetes API Server
