@@ -132,8 +132,9 @@ pre {font-size:0.8em;}
     padding: 3px;
     border: 1px solid #337ab7;
     border-radius: 0.5em;
+    overflow: hidden;
 }
-.node .pod .warning, .node .pod .pending {
+.pod .warning, .pod .pending {
     background-color: red;
     color: white;
 }
@@ -143,6 +144,10 @@ pre {font-size:0.8em;}
     border: 1px solid #bbb;
     padding: 5px;
     overflow: auto;
+}
+.log    {
+    color: #eee;
+    background-color: #333;
 }
 #warnings h3    {
     margin-top: 3px;

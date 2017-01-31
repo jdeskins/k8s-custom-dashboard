@@ -5,6 +5,7 @@ import App from './modules/App'
 import About from './modules/About'
 import Events from './modules/Events'
 import Home from './modules/Home'
+import Log from './modules/Log'
 import Namespaces from './modules/Namespaces'
 import NSEvents from './modules/NSEvents'
 import Pod from './modules/Pod'
@@ -21,6 +22,7 @@ render((
       <Route path="/namespaces" component={Namespaces}/>
       <Route path="/namespaces/:namespace/events" component={NSEvents}/>
       <Route path="/namespaces/:namespace/pods/:name" component={Pod}/>
+      <Route path="/namespaces/:namespace/pods/:name/log" component={Log}/>
       <Route path="/namespaces/:namespace/pods" component={Pods}/>
       <Route path="/namespaces/:namespace/services" component={Services}/>
       <Route path="/pods" component={Pods}/>
