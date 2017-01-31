@@ -37,7 +37,6 @@ export default React.createClass({
               <li><NavLink to="/namespaces">Namespaces</NavLink></li>
               <li><NavLink to="/events">All Events</NavLink></li>
               <li><NavLink to="/pods">All Pods</NavLink></li>
-              <li><NavLink to="/about">About</NavLink></li>
             </ul>
           </section>
         </div>
