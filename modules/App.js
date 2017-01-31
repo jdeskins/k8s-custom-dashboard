@@ -42,7 +42,7 @@ export default React.createClass({
           </section>
         </div>
         <div className="content-wrapper">
-          <div className="container">
+          <div className="container-fluid">
             {this.props.children}
           </div>
         </div>

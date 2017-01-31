@@ -193,7 +193,7 @@ export default React.createClass({
 
         {Object.keys(this.state.podsByNodes).map( node =>
           <div key={node} className="col-md-4 node-container">
-            <div className="node well">
+            <div className="node">
               <div className="name">NODE: {node}</div>
 
               {this.state.podsByNodes[node].map(pod =>
@@ -201,8 +201,7 @@ export default React.createClass({
                   <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
                   {pod.image}<br/>
                   NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
-                  CPU: {pod.CPULimit}<br/>
-                  Mem: {pod.MemLimit}<br/>
+                  CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
                   Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
                   <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
                   <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
