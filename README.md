@@ -5,7 +5,8 @@
 
 ![Screenshot](screenshot.png)
 
-This will build the necessary project files on your local machine.
+This will create the necessary html and javascript files 
+to run the dashboard from your local machine.
 The kubectl proxy command will start an internal server using the static dashboard files.
 
 Clone this repo:
