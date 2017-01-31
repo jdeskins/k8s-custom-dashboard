@@ -53,7 +53,11 @@ var getRestartStyle = function (count) {
 var showLabels = function(labels) {
   var labelArray = [];
   for (var key in labels){
-    labelArray.push(<div className="pod-label" key={key}>{key}: {labels[key]}</div>);
+    labelArray.push(
+      <div className="pod-label" key={key}>
+        <Link to={"/pods/label/"+ key +"/" + labels[key]}>{key}: {labels[key]}</Link>
+      </div>
+    );
   }
   return (
     <div>

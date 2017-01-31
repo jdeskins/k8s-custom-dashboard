@@ -10,6 +10,7 @@ import Namespaces from './modules/Namespaces'
 import NSEvents from './modules/NSEvents'
 import Pod from './modules/Pod'
 import Pods from './modules/Pods'
+import PodsByLabel from './modules/PodsByLabel'
 import Services from './modules/Services'
 
 
@@ -26,6 +27,7 @@ render((
       <Route path="/namespaces/:namespace/pods" component={Pods}/>
       <Route path="/namespaces/:namespace/services" component={Services}/>
       <Route path="/pods" component={Pods}/>
+      <Route path="/pods/label/:labelkey/:labelvalue" component={PodsByLabel}/>
     </Route>
   </Router>
 ), document.getElementById('app'));
