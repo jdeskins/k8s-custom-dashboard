@@ -68,6 +68,7 @@ export default React.createClass({
           <thead>
           <tr>
             <th>Name</th>
+            <th>Namespace</th>
             <th>Type</th>
             <th>Cluster IP</th>
             <th>Internal Endpoints</th>
@@ -78,6 +79,7 @@ export default React.createClass({
           {this.state.services.map(service =>
             <tr key={service.objectMeta.name}>
               <td>{service.objectMeta.name}</td>
+              <td>{service.objectMeta.namespace}</td>
               <td>{service.type}</td>
               <td>{service.clusterIP}</td>
               <td>{getInternalEndpoints(service)}</td>

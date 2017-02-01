@@ -5,6 +5,15 @@ import { Link } from 'react-router'
 import Pod from './elements/Pod'
 
 
+var createUrl = function(namespace, path) {
+  var url = '/' + path;
+  if (namespace) {
+    url = '/namespaces/'+ this.props.params.namespace + '/' + path;
+  }
+  return url;
+}
+
+
 var getRestartCount = function(pod) {
   var restartCount = "NA";
   if (pod.status.containerStatuses && pod.status.containerStatuses[0]) {
@@ -118,8 +127,8 @@ export default React.createClass({
       <div>
         <h1>{this.state.title}</h1>
         <div>
-          <Link to={"/namespaces/"+ this.props.params.namespace +"/events"}>Events</Link> <span className="divider">|</span>
-          <Link to={"/namespaces/"+ this.props.params.namespace +"/services"}>Services</Link>
+          <Link to={createUrl(this.props.params.namespace, 'events')}>Events</Link> <span className="divider">|</span>
+          <Link to={createUrl(this.props.params.namespace, 'services')}>Services</Link>
         </div>
 
         {this.state.warnings.length > 0 &&

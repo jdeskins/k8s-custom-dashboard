@@ -30,6 +30,7 @@ render((
       <Route path="/namespaces/:namespace/services" component={Services}/>
       <Route path="/pods" component={Pods}/>
       <Route path="/pods/label/:labelkey/:labelvalue" component={PodsByLabel}/>
+      <Route path="/services" component={Services}/>
     </Route>
   </Router>
 ), document.getElementById('app'));
