@@ -29,14 +29,15 @@ pre {font-size:0.8em;}
     display: block;
     float: left;
     height: 50px;
-    font-size: 20px;
+    font-size: 24px;
     line-height: 50px;
     text-align: center;
-    width: 180px;
+    width: 400px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     padding: 0 15px;
     font-weight: 300;
     overflow: hidden;
+    color: #eee;
 }
 .main-header .navbar {
     margin-bottom: 0;
@@ -136,7 +137,7 @@ pre {font-size:0.8em;}
     border-radius: 0.5em;
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-    height: 250px;
+    height: 270px;
 }
 .pod-label  {
     padding-left: 10px;

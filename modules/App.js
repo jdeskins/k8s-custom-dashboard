@@ -15,18 +15,13 @@ export default React.createClass({
     return (
       <div>
         <header className="main-header">
-          <Link to={"/"}><div className="logo">Kube Dashboard</div></Link>
+
           <nav className="navbar navbar-static-top">
             <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
               <span className="sr-only">Toggle navigation</span>
             </a>
-            <div className="navbar-custom-menu text-right">
-              {this.state.username &&
-                <div className="user-info">
-                  <div>Logged in: {this.state.username}</div>
-                  <div><Link to={"/logout"}>Log Out</Link></div>
-                </div>
-              }
+            <div className="navbar-custom-menu">
+              <Link to={"/"}><div className="logo">Custom Kubernetes Dashboard</div></Link>
             </div>
           </nav>
         </header>

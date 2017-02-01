@@ -6,9 +6,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Custom Dashboard</h1>
+        <h3>Custom Dashboard</h3>
         <div className="col-md-8">
-          <p>Custom dashboard to display cluster information and status.</p>
+          <p>Dashboard to display cluster information and status.</p>
           <p>
             This uses the credentials currently used by your local kubectl command.
             Use that command to change clusters or set the KUBECONFIG environment variable to point
