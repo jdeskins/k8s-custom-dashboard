@@ -23,6 +23,15 @@ var getMemoryLimit = function(pod) {
 };
 
 
+var getStartTime = function(pod) {
+  var startTime = "NA";
+  if (pod.status.containerStatuses && pod.status.containerStatuses[0] && pod.status.containerStatuses[0].state.running) {
+    startTime = pod.status.containerStatuses[0].state.running.startedAt;
+  }
+  return startTime;
+};
+
+
 var getRestartCount = function(pod) {
   var restartCount = "NA";
   if (pod.status.containerStatuses && pod.status.containerStatuses[0]) {
@@ -130,7 +139,7 @@ export default React.createClass({
             'MemLimit': getMemoryLimit(pod),
             'phase': pod.status.phase,
             'restartCount': restartCount,
-            'startTime': pod.status.startTime,
+            'startTime': getStartTime(pod),
             'reason': getStatus(pod),
             'labels': pod.metadata.labels
           };
@@ -210,23 +219,30 @@ export default React.createClass({
 
 
         {Object.keys(this.state.podsByNodes).map( node =>
-          <div key={node} className="col-md-4 node-container">
-            <div className="node">
-              <div className="name">NODE: {node}</div>
+          <div key={node} className="row">
+            <div className="col-md-12 node-container">
+              <div className="node row">
+                <div className="name">NODE: {node}</div>
 
-              {this.state.podsByNodes[node].map(pod =>
-                <div className="pod" key={pod.name}>
-                  <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
-                  {pod.image}<br/>
-                  NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
-                  {showLabels(pod.labels)}
-                  CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
-                  Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
-                  <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
-                  <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
-                </div>
-              )}
+                {this.state.podsByNodes[node].map(pod =>
+                  <div className="col-md-3" key={pod.name}>
+                    <div className="pod">
+                      <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
+                      {pod.image}<br/>
+                      NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
+                      {showLabels(pod.labels)}
+                      CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
+                      Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
 
+                      <div className={pod.phase.toLowerCase()}>
+                        Status: {pod.phase} &nbsp;
+                        <span className={getRestartStyle(pod.restartCount)}>({pod.restartCount} restarts)</span>
+                        </div>
+                    </div>
+                  </div>
+                )}
+
+              </div>
             </div>
           </div>
         )}

@@ -130,12 +130,13 @@ pre {font-size:0.8em;}
 .pod {
     background-color: #eeeeef;
     color: #000;
-    margin:10px 3px;
+    margin: 3px 0px;
     padding: 3px;
     border: 1px solid #337ab7;
     border-radius: 0.5em;
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+    height: 270px;
 }
 .pod-label  {
     padding-left: 10px;

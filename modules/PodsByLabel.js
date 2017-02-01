@@ -117,14 +117,16 @@ export default React.createClass({
                 <div className="name">NODE: {node}</div>
 
                 {this.state.podsByNodes[node].map(pod =>
-                  <div className="pod col-md-3" key={pod.name}>
-                    <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
-                    <h4>{pod.image}</h4>
-                    NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
-                    {showLabels(pod.labels)}
-                    Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
-                    <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
-                    <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
+                  <div className="col-md-3" key={pod.name}>
+                    <div className="pod">
+                      <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
+                      <h4>{pod.image}</h4>
+                      NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
+                      {showLabels(pod.labels)}
+                      Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
+                      <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
+                      <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
+                    </div>
                   </div>
                 )}
 
