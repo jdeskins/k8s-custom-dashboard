@@ -1,5 +1,6 @@
 body {
-    font-size: 1.3em;
+    font-size: 14px;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
     background-color: #f1f1f1;
 }
 a:link, a:visited, a:hover, a:active {
@@ -42,7 +43,7 @@ pre {font-size:0.8em;}
     margin-left: 180px;
     border: none;
     min-height: 50px;
-    background-color: #3c8dbc;
+    background-color: rgb(50,109,230);
     border-radius: 0;
 }
 .navbar-custom-menu {
@@ -116,10 +117,11 @@ pre {font-size:0.8em;}
     padding-bottom: 25px;
 }
 .node   {
-    border: 1px solid #999;
+    border: 1px solid rgb(0,153,57);
     border-radius: 10px;
     background-color: rgb(0,153,57);
     padding: 6px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 .node .name {
     color: #fff;
@@ -133,6 +135,7 @@ pre {font-size:0.8em;}
     border: 1px solid #337ab7;
     border-radius: 0.5em;
     overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
 }
 .pod-label  {
     padding-left: 10px;

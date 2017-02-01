@@ -108,25 +108,27 @@ export default React.createClass({
     return (
       <div>
         <h1>{this.state.title} ({this.props.params.labelkey}: {this.props.params.labelvalue})</h1>
+        <p>Found {this.state.pods.length}</p>
 
         {Object.keys(this.state.podsByNodes).map( node =>
-          <div key={node} className="col-md-4 node-container">
-            <div className="node">
-              <div className="name">NODE: {node}</div>
+          <div key={node} className="row">
+            <div className="node-container col-md-12">
+              <div className="node row">
+                <div className="name">NODE: {node}</div>
 
-              {this.state.podsByNodes[node].map(pod =>
-                <div className="pod" key={pod.name}>
-                  <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
-                  {pod.image}<br/>
-                  NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
-                  {showLabels(pod.labels)}
-                  CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
-                  Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
-                  <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
-                  <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
-                </div>
-              )}
+                {this.state.podsByNodes[node].map(pod =>
+                  <div className="pod col-md-3" key={pod.name}>
+                    <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
+                    <h4>{pod.image}</h4>
+                    NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
+                    {showLabels(pod.labels)}
+                    Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
+                    <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
+                    <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
+                  </div>
+                )}
 
+              </div>
             </div>
           </div>
         )}
