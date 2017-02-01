@@ -14,6 +14,15 @@ var getRestartCount = function(pod) {
 };
 
 
+var getStatus = function(pod) {
+  var status = "";
+  if (pod.status.containerStatuses && pod.status.containerStatuses[0].state.waiting) {
+    status = pod.status.containerStatuses[0].state.waiting.reason;
+  }
+  return status;
+};
+
+
 var isWarningState = function(pod){
   // TODO: add pending status
   const restartCount = getRestartCount(pod);
@@ -77,7 +86,7 @@ export default React.createClass({
           }
 
           if (isWarningState(pod)) {
-            warnings.push(podData);
+            warnings.push(pod);
           }
 
         });
@@ -128,12 +137,12 @@ export default React.createClass({
               </thead>
               <tbody>
                 {this.state.warnings.map( warning =>
-                  <tr key={warning.name} className="danger">
-                    <td><Link to={"/namespaces/"+ warning.namespace +"/pods/" + warning.name}>{warning.name}</Link></td>
-                    <td><Link to={"/namespaces/"+ warning.namespace +"/pods"}>{warning.namespace}</Link></td>
-                    <td>{warning.phase}</td>
-                    <td>{warning.restartCount}</td>
-                    <td>{warning.reason}</td>
+                  <tr key={warning.metadata.name} className="danger">
+                    <td><Link to={"/namespaces/"+ warning.metadata.namespace +"/pods/" + warning.metadata.name}>{warning.metadata.name}</Link></td>
+                    <td><Link to={"/namespaces/"+ warning.metadata.namespace +"/pods"}>{warning.metadata.namespace}</Link></td>
+                    <td>{warning.status.phase}</td>
+                    <td>{getRestartCount(warning)}</td>
+                    <td>{getStatus(warning)}</td>
                   </tr>
                 )}
               </tbody>
