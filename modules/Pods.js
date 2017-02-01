@@ -1,35 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios';
-import moment from 'moment';
 import { Link } from 'react-router'
-
-
-var getCPULimit = function(pod) {
-  var cpuLimit = 'NA';
-  if (pod.spec.containers[0].resources && pod.spec.containers[0].resources.limits) {
-    cpuLimit = pod.spec.containers[0].resources.limits.cpu
-  }
-  return cpuLimit;
-};
-
-
-var getMemoryLimit = function(pod) {
-  var memLimit = 'NA';
-  if (pod.spec.containers[0].resources && pod.spec.containers[0].resources.limits) {
-    memLimit = pod.spec.containers[0].resources.limits.memory
-  }
-  return memLimit;
-};
-
-
-var getStartTime = function(pod) {
-  var startTime = "NA";
-  if (pod.status.containerStatuses && pod.status.containerStatuses[0] && pod.status.containerStatuses[0].state.running) {
-    startTime = pod.status.containerStatuses[0].state.running.startedAt;
-  }
-  return startTime;
-};
+import Pod from './elements/Pod'
 
 
 var getRestartCount = function(pod) {
@@ -40,41 +13,6 @@ var getRestartCount = function(pod) {
   return restartCount;
 };
 
-
-var getStatus = function(pod) {
-  var status = "";
-  if (pod.status.containerStatuses && pod.status.containerStatuses[0].state.waiting) {
-    status = pod.status.containerStatuses[0].state.waiting.reason;
-  }
-  return status;
-};
-
-
-var getRestartStyle = function (count) {
-  // TODO: Count for uptime
-  if (parseInt(count) > 20) {
-    return "warning";
-  } else {
-    return "";
-  }
-};
-
-var showLabels = function(labels) {
-  var labelArray = [];
-  for (var key in labels){
-    labelArray.push(
-      <div className="pod-label" key={key}>
-        <Link to={"/pods/label/"+ key +"/" + labels[key]}>{key}: {labels[key]}</Link>
-      </div>
-    );
-  }
-  return (
-    <div>
-      Labels:
-      { labelArray }
-    </div>
-  );
-};
 
 var isWarningState = function(pod){
   // TODO: add pending status
@@ -130,30 +68,16 @@ export default React.createClass({
         var podsByNodes = {};
         var warnings = [];
         pods.map(function(pod){
-          var restartCount = getRestartCount(pod);
-          var podData = {
-            'name': pod.metadata.name,
-            'namespace': pod.metadata.namespace,
-            'image': pod.spec.containers[0].image,
-            'CPULimit': getCPULimit(pod),
-            'MemLimit': getMemoryLimit(pod),
-            'phase': pod.status.phase,
-            'restartCount': restartCount,
-            'startTime': getStartTime(pod),
-            'reason': getStatus(pod),
-            'labels': pod.metadata.labels
-          };
+          var nodeName = pod.spec.nodeName;
+          if (podsByNodes[nodeName]) {
+            podsByNodes[nodeName].push(pod);
+          } else {
+            podsByNodes[nodeName] = [];
+            podsByNodes[nodeName].push(pod);
+          }
 
           if (isWarningState(pod)) {
             warnings.push(podData);
-          }
-
-          var nodeName = pod.spec.nodeName;
-          if (podsByNodes[nodeName]) {
-            podsByNodes[nodeName].push(podData);
-          } else {
-            podsByNodes[nodeName] = [];
-            podsByNodes[nodeName].push(podData);
           }
 
         });
@@ -225,20 +149,8 @@ export default React.createClass({
                 <div className="name">NODE: {node}</div>
 
                 {this.state.podsByNodes[node].map(pod =>
-                  <div className="col-md-3" key={pod.name}>
-                    <div className="pod">
-                      <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
-                      {pod.image}<br/>
-                      NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
-                      {showLabels(pod.labels)}
-                      CPU: {pod.CPULimit} Mem: {pod.MemLimit}<br/>
-                      Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
-
-                      <div className={pod.phase.toLowerCase()}>
-                        Status: {pod.phase} &nbsp;
-                        <span className={getRestartStyle(pod.restartCount)}>({pod.restartCount} restarts)</span>
-                        </div>
-                    </div>
+                  <div className="col-md-3" key={pod.metadata.name}>
+                    <Pod pod={pod} />
                   </div>
                 )}
 

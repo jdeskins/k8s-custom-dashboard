@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import moment from 'moment';
 import { Link } from 'react-router'
-
+import Pod from './elements/Pod'
 
 
 var getStatus = function(pod) {
@@ -71,28 +71,14 @@ export default React.createClass({
         }
 
         var podsByNodes = {};
-        var warnings = [];
         pods.map(function(pod){
-          var restartCount = getRestartCount(pod);
-          var podData = {
-            'name': pod.metadata.name,
-            'namespace': pod.metadata.namespace,
-            'image': pod.spec.containers[0].image,
-            'phase': pod.status.phase,
-            'restartCount': restartCount,
-            'startTime': pod.status.startTime,
-            'reason': getStatus(pod),
-            'labels': pod.metadata.labels
-          };
-
           var nodeName = pod.spec.nodeName;
           if (podsByNodes[nodeName]) {
-            podsByNodes[nodeName].push(podData);
+            podsByNodes[nodeName].push(pod);
           } else {
             podsByNodes[nodeName] = [];
-            podsByNodes[nodeName].push(podData);
+            podsByNodes[nodeName].push(pod);
           }
-
         });
 
         this.setState({
@@ -112,21 +98,13 @@ export default React.createClass({
 
         {Object.keys(this.state.podsByNodes).map( node =>
           <div key={node} className="row">
-            <div className="node-container col-md-12">
+            <div className="col-md-12 node-container">
               <div className="node row">
                 <div className="name">NODE: {node}</div>
 
                 {this.state.podsByNodes[node].map(pod =>
-                  <div className="col-md-3" key={pod.name}>
-                    <div className="pod">
-                      <b>POD: <Link to={"/namespaces/"+ pod.namespace +"/pods/" + pod.name}>{pod.name}</Link></b><br/>
-                      <h4>{pod.image}</h4>
-                      NS: <Link to={"/namespaces/"+ pod.namespace +"/pods"}>{pod.namespace}</Link><br/>
-                      {showLabels(pod.labels)}
-                      Started: {moment(pod.startTime).format("MM/DD HH:mm:ss")}<br/>
-                      <div className={getRestartStyle(pod.restartCount)}>Restarts: {pod.restartCount}</div>
-                      <div className={pod.phase.toLowerCase()}>Status: {pod.phase}</div>
-                    </div>
+                  <div className="col-md-3" key={pod.metadata.name}>
+                    <Pod pod={pod} />
                   </div>
                 )}
 
