@@ -8,7 +8,7 @@ import Pod from './elements/Pod'
 var createUrl = function(namespace, path) {
   var url = '/' + path;
   if (namespace) {
-    url = '/namespaces/'+ this.props.params.namespace + '/' + path;
+    url = '/namespaces/'+ namespace + '/' + path;
   }
   return url;
 }
