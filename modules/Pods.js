@@ -5,6 +5,8 @@ import { Link } from 'react-router'
 import Pod from './elements/Pod'
 
 
+var timer;
+
 var createUrl = function(namespace, path) {
   var url = '/' + path;
   if (namespace) {
@@ -48,7 +50,9 @@ export default React.createClass({
       pods: [],
       podsByNodes: {},
       title: 'Pods',
-      warnings: []
+      warnings: [],
+      namespace: '',
+      refreshValue: '0'
     }
   },
 
@@ -56,12 +60,49 @@ export default React.createClass({
   componentWillReceiveProps: function (nextProps) {
     // Only load if params have changed
     if (nextProps.params.namespace != this.props.params.namespace) {
-      this.loadDocument(nextProps.params.namespace);
+      clearInterval(timer);
+      var namespace = nextProps.params.namespace;
+      this.setState({namespace: namespace});
+      this.loadDocument(namespace);
+      var refreshValue = this.state.refreshValue;
+      if (refreshValue != undefined && refreshValue != '0') {
+        const refreshInterval = parseInt(refreshValue) * 1000;
+        this.startRefresh(refreshInterval, namespace);
+      }
+    }
+  },
+
+
+  componentWillUnmount: function() {
+    if (timer) {
+      clearInterval(timer);
+    }
+  },
+
+
+  startRefresh: function(refreshInterval, namespace) {
+    var loadDocument = this.loadDocument;
+    timer = setInterval(function(x) {
+      loadDocument(x);
+    }, refreshInterval, namespace);
+  },
+
+
+  handleRefreshChange: function(event) {
+    const refreshValue = event.target.value;
+    this.setState({refreshValue: refreshValue});
+    if (refreshValue == "0") {
+      clearInterval(timer);
+    } else {
+      const refreshInterval = parseInt(refreshValue) * 1000;
+      var namespace = this.state.namespace;
+      this.startRefresh(refreshInterval, namespace);
     }
   },
 
 
   loadDocument: function(namespace) {
+    console.log('In loadDocument... namespace=' + namespace);
     var url, title;
 
     if (namespace) {
@@ -107,13 +148,14 @@ export default React.createClass({
           podsByNodes: podsByNodes,
           warnings: warnings
         });
-
       });
   },
 
 
   componentDidMount: function() {
-    this.loadDocument(this.props.params.namespace);
+    var namespace = this.props.params.namespace;
+    this.setState({namespace: namespace});
+    this.loadDocument(namespace);
   },
 
 
@@ -126,6 +168,16 @@ export default React.createClass({
     return (
       <div>
         <h1>{this.state.title}</h1>
+
+        <form>
+          <select name="refreshInterval" onChange={this.handleRefreshChange}>
+            <option value="0">No Refresh</option>
+            <option value="2">2 Seconds</option>
+            <option value="5">5 Seconds</option>
+            <option value="10">10 Seconds</option>
+            <option value="30">30 Seconds</option>
+          </select>
+        </form>
         <div>
           <Link to={createUrl(this.props.params.namespace, 'events')}>Events</Link> <span className="divider">|</span>
           <Link to={createUrl(this.props.params.namespace, 'services')}>Services</Link>
