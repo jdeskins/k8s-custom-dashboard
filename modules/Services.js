@@ -4,21 +4,26 @@ import { Link } from 'react-router'
 
 
 var getInternalEndpoints = function(service) {
-  var endpoints = '';
-  var internalEndpoint = service.internalEndpoint;
+  const endpoints = [];
+  const internalEndpoint = service.internalEndpoint;
   if (service.type == 'NodePort') {
-    endpoints = internalEndpoint.host + ':' + internalEndpoint.ports[0].nodePort + ' ' + internalEndpoint.ports[0].protocol;
+    endpoints.push(<div key={internalEndpoint.ports[0].nodePort}>{internalEndpoint.host}:{internalEndpoint.ports[0].nodePort} ({internalEndpoint.ports[0].protocol})</div>);
   } else {
-    endpoints = internalEndpoint.host + ':' + internalEndpoint.ports[0].port + ' ' + internalEndpoint.ports[0].protocol;
+    endpoints.push(<div key={internalEndpoint.ports[0].port}>{internalEndpoint.host}:{internalEndpoint.ports[0].port} ({internalEndpoint.ports[0].protocol})</div>);
   }
-
   return endpoints;
 };
 
 
-// TODO: Check structure of service.externalEndpoints and display properly
 var getExternalEndpoints = function(service) {
-  return JSON.stringify(service.externalEndpoints);
+  const endpoints = [];
+  if (service.externalEndpoints && service.externalEndpoints.length > 0) {
+    for (var i = 0; i < service.externalEndpoints.length; i++) {
+      var endpoint = service.externalEndpoints[i];
+      endpoints.push(<div key={i}>{endpoint.host}:{endpoint.ports[0].port} ({endpoint.ports[0].protocol})</div>);
+    }
+  }
+  return endpoints;
 };
 
 
