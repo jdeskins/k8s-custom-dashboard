@@ -5,6 +5,15 @@ import moment from 'moment';
 import Loader from './Loader'
 
 
+var getClassFromType = function(type) {
+  var className = '';
+  if (type == 'Warning') {
+    className = 'danger';
+  }
+  return className;
+};
+
+
 export default React.createClass({
   getInitialState: function() {
     return {
@@ -44,7 +53,7 @@ export default React.createClass({
           </thead>
           <tbody>
           {this.state.events.map(event =>
-            <tr key={event.metadata.uid}>
+            <tr key={event.metadata.uid} className={getClassFromType(event.type)}>
               <td><Link to={"/namespaces/"+ event.metadata.namespace +"/events"}>{event.metadata.namespace}</Link></td>
               <td>{event.involvedObject.kind} {event.involvedObject.name}</td>
               <td>{event.reason}</td>
