@@ -170,6 +170,7 @@ export default React.createClass({
         <h1>{this.state.title}</h1>
 
         <form>
+          <label>Refresh:</label>
           <select name="refreshInterval" onChange={this.handleRefreshChange}>
             <option value="0">No Refresh</option>
             <option value="2">2 Seconds</option>
