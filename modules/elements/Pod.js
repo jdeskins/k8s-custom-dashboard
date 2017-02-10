@@ -23,11 +23,16 @@ var getMemoryLimit = function(pod) {
 
 
 var getStartTime = function(pod) {
+  return moment(pod.status.startTime).format("MM/DD HH:mm:ss");
+};
+
+
+var getLastStartTime = function(pod) {
   var startTime = "";
   if (pod.status.containerStatuses && pod.status.containerStatuses[0] && pod.status.containerStatuses[0].state.running) {
     startTime = pod.status.containerStatuses[0].state.running.startedAt;
   }
-  return startTime;
+  return moment(startTime).format("MM/DD HH:mm:ss");
 };
 
 
@@ -86,14 +91,15 @@ export default React.createClass({
       <div className="pod">
         <b>POD: <Link to={"/namespaces/"+ pod.metadata.namespace +"/pods/" + pod.metadata.name}>{pod.metadata.name}</Link></b><br/>
         {pod.spec.containers[0].image}<br/>
-        NS: <Link to={"/namespaces/"+ pod.metadata.namespace +"/pods"}>{pod.metadata.namespace}</Link><br/>
-        {showLabels(pod.metadata.labels)}
-        CPU: {getCPULimit(pod)} Mem: {getMemoryLimit(pod)}<br/>
-        Started: {moment(getStartTime(pod)).format("MM/DD HH:mm:ss")}<br/>
         <div className={pod.status.phase.toLowerCase()}>
           Status: {pod.status.phase} &nbsp;
           <span className={getRestartStyle(restartCount)}>({restartCount} restarts)</span>
         </div>
+        NS: <Link to={"/namespaces/"+ pod.metadata.namespace +"/pods"}>{pod.metadata.namespace}</Link><br/>
+        {showLabels(pod.metadata.labels)}
+        CPU: {getCPULimit(pod)} Mem: {getMemoryLimit(pod)}<br/>
+        Started: {getStartTime(pod)}<br/>
+        Last Start: {getLastStartTime(pod)}<br/>
       </div>
     )
   }
