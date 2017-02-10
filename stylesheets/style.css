@@ -157,6 +157,10 @@ pre {font-size:0.8em;}
     color: #eee;
     background-color: #333;
 }
+.small  {
+    font-size: 0.8em;
+    font-style: italic;
+}
 #warnings h3    {
     margin-top: 3px;
 }

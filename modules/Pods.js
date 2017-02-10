@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios';
+import moment from 'moment';
 import { Link } from 'react-router'
 import Pod from './elements/Pod'
 
@@ -203,7 +204,7 @@ export default React.createClass({
                     <td><Link to={"/namespaces/"+ warning.metadata.namespace +"/pods/" + warning.metadata.name}>{warning.metadata.name}</Link></td>
                     <td><Link to={"/namespaces/"+ warning.metadata.namespace +"/pods"}>{warning.metadata.namespace}</Link></td>
                     <td>{warning.status.phase}</td>
-                    <td>{getRestartCount(warning)}</td>
+                    <td>{getRestartCount(warning)} <span className="small">(since {moment(warning.status.startTime).format("MM/DD HH:mm")})</span></td>
                     <td>{getStatus(warning)}</td>
                   </tr>
                 )}
