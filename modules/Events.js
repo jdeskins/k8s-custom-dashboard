@@ -38,6 +38,7 @@ export default React.createClass({
     return (
       <div>
         <h1>Events ({this.state.events.length})</h1>
+        <span>Last Hour</span>
         <Loader isLoading={this.state.isLoading} />
         <table className="table table-striped table-bordered table-hover table-condensed">
           <thead>

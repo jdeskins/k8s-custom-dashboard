@@ -40,6 +40,7 @@ export default React.createClass({
     return (
       <div>
         <h1>Events for {this.props.params.namespace}</h1>
+        <span>Last Hour</span>
         <div>
           <Link to={"/namespaces/"+ this.props.params.namespace +"/pods"}>Pods</Link> <span className="divider">|</span>
           <Link to={"/namespaces/"+ this.props.params.namespace +"/services"}>Services</Link>
