@@ -28,7 +28,9 @@ export default React.createClass({
       <div>
         <h1>Pod: {this.state.name}</h1>
         <div>
-          <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/"+ this.state.name +"/log"}>View Log</Link>
+          <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/"+ this.state.name +"/log"}>
+            <button type="button" className="btn btn-primary">View Log</button>
+          </Link>
         </div>
         <div>
           Namespace: {this.props.params.namespace} <span className="divider">|</span>
