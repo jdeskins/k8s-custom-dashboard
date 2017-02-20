@@ -38,7 +38,7 @@ The default port is 8001.
 
 ## Proxy Kubernetes API Server
 Running the kubectl proxy command will run a proxy to the Kubernetes API server using
-the credentials in ~/.kube/config file.
+the credentials in **~/.kube/config** file.
 
 To use other credentials, set the Environment variable pointing to the credentials yaml file.
 ```
