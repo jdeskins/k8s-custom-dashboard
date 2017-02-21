@@ -52,9 +52,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Log for Pod: {this.state.name}</h1>
+        <h1>Log for Pod: <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/"+ this.state.name}>{this.state.name}</Link></h1>
         {this.state.container &&
-          <h2>Container: {this.state.container}</h2>
+          <h3>Container: {this.state.container}</h3>
         }
 
         {this.state.containers.length > 0 &&
