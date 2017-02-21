@@ -103,7 +103,6 @@ export default React.createClass({
 
 
   loadDocument: function(namespace) {
-    console.log('In loadDocument... namespace=' + namespace);
     var url, title;
 
     if (namespace) {
@@ -127,6 +126,7 @@ export default React.createClass({
 
         var podsByNodes = {};
         var warnings = [];
+        var containerCount = 0;
         pods.map(function(pod){
           var nodeName = pod.spec.nodeName;
           if (podsByNodes[nodeName]) {
@@ -139,13 +139,14 @@ export default React.createClass({
           if (isWarningState(pod)) {
             warnings.push(pod);
           }
+          containerCount += pod.spec.containers.length;
 
         });
 
         var numberOfNodes = Object.keys(podsByNodes).length;
         this.setState({
           pods: pods,
-          title: title + ' (' + pods.length + ' pods on ' + numberOfNodes + ' nodes)',
+          title: title + ' (' + pods.length + ' pods, '+ containerCount +' containers on ' + numberOfNodes + ' nodes)',
           podsByNodes: podsByNodes,
           warnings: warnings
         });
