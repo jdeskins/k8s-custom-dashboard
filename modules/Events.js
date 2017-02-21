@@ -16,13 +16,27 @@ var getClassFromType = function(type) {
   return className;
 };
 
+class WarningCount extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    var total = this.props.count;
+    var message = total + (total > 1 ? ' warnings' : ' warning');
+    return (<span>{ message }</span>)
+  }
+
+}
+
 
 export default React.createClass({
   getInitialState: function() {
     return {
       isLoading: false,
       events: [],
-      namespace: ''
+      namespace: '',
+      warningCount: 0
     }
   },
 
@@ -87,10 +101,17 @@ export default React.createClass({
     axios.get(url)
       .then(res => {
         var events = [];
+        var warningCount = 0;
         if (res.data.items) {
           events = res.data.items.sort(function(a, b) {return a.lastTimestamp.localeCompare(b.lastTimestamp);});
+          const eventsLength = events.length;
+          for (var i = 0; i < eventsLength; i++) {
+            if (events[i].type == 'Warning') {
+              warningCount += 1;
+            }
+          }
         }
-        this.setState({ isLoading: false, events: events });
+        this.setState({ isLoading: false, events: events, warningCount: warningCount });
       });
   },
 
@@ -114,7 +135,8 @@ export default React.createClass({
             <option value="600">10 minutes</option>
           </select>
         </form>
-        <span>Last Hour</span>
+        <b>Last Hour: (<WarningCount count={this.state.warningCount}/>)</b>
+
         <Loader isLoading={this.state.isLoading} />
         <table className="table table-striped table-bordered table-hover table-condensed">
           <thead>
