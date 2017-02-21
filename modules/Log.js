@@ -15,8 +15,6 @@ export default React.createClass({
 
 
   componentWillReceiveProps: function (nextProps) {
-    console.log('nextProps.location.query.container=' + nextProps.location.query.container);
-    console.log('this.state.container=' + this.state.container);
     // Only load if params have changed
     if (nextProps.params.namespace != this.props.params.namespace ||
         nextProps.location.query.container != this.state.container ||
@@ -30,15 +28,8 @@ export default React.createClass({
 
 
   loadDocument: function(namespace, podName, container) {
-    // var container = this.props.location.query.container;
-    console.log('container=' + container);
-
-    var url = '/api/v1/namespaces/' + namespace + '/pods/' + podName + '/log';
-    if (container) {
-      url += '?container=' + container;
-    }
+    const url = '/api/v1/namespaces/' + namespace + '/pods/' + podName + '/log?container=' + container;
     const _this = this;
-
     axios.get(url)
       .then(res => {
         var log = res.data;
@@ -46,18 +37,6 @@ export default React.createClass({
           log = "(empty)";
         }
         _this.setState({ container: container, log: log, name: podName });
-      })
-      .catch(function (error) {
-        if (error.response.status == 400) {
-          var message = error.response.data.message;
-          var start = message.indexOf('[');
-          var containerStr = message.substring(start + 1, message.length - 1);
-          var containers = containerStr.split(' ');
-          console.log('Error 400: containers: ' + containers);
-          _this.setState({ containers: containers, name: podName });
-        } else {
-          console.log(error);
-        }
       });
   },
 

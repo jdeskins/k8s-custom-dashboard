@@ -157,6 +157,9 @@ pre {font-size:0.8em;}
     color: #eee;
     background-color: #333;
 }
+.container-item button  {
+    margin:5px;
+}
 .small  {
     font-size: 0.8em;
     font-style: italic;

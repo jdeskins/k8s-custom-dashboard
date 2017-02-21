@@ -8,7 +8,8 @@ export default React.createClass({
     return {
       pod: {},
       name: "",
-      podText: ""
+      podText: "",
+      containers: []
     }
   },
 
@@ -18,7 +19,12 @@ export default React.createClass({
     axios.get(url)
       .then(res => {
         const pod = res.data;
-        this.setState({ pod: pod, name: pod.metadata.name, podText: JSON.stringify(pod, null, 4) });
+        this.setState({
+          pod: pod,
+          name: pod.metadata.name,
+          podText: JSON.stringify(pod, null, 4),
+          containers: pod.spec.containers
+        });
       });
   },
 
@@ -28,9 +34,14 @@ export default React.createClass({
       <div>
         <h1>Pod: {this.state.name}</h1>
         <div>
-          <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/"+ this.state.name +"/log"}>
-            <button type="button" className="btn btn-primary">View Log</button>
-          </Link>
+          {this.state.containers.map(container =>
+            <div key={container.name} className="container-item">
+              <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/"+ this.state.name +"/log?container=" + container.name}>
+                <button type="button" className="btn btn-sm btn-primary">View Logs</button>
+              </Link>
+              <b>{ container.name }</b>
+            </div>
+          )}
         </div>
         <div>
           Namespace: {this.props.params.namespace} <span className="divider">|</span>
