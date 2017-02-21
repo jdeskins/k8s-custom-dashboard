@@ -3,7 +3,7 @@
 
 ## Run Custom Kubernetes Dashboard Locally
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.jpg)
 
 View:
 * Namespaces
