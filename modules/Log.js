@@ -9,7 +9,8 @@ export default React.createClass({
       container: "",
       log: "",
       name: "",
-      containers: []
+      containers: [],
+      error: ""
     }
   },
 
@@ -37,6 +38,13 @@ export default React.createClass({
           log = "(empty)";
         }
         _this.setState({ container: container, log: log, name: podName });
+      })
+      .catch(function (error) {
+        if (error.response.status == 400) {
+          const message = error.response.data.message;
+          console.log('message=' + message);
+          _this.setState({ error: message,  name: podName });
+        }
       });
   },
 
@@ -75,6 +83,12 @@ export default React.createClass({
           <Link to={"/namespaces/"+ this.props.params.namespace +"/pods"}>Pods</Link> <span className="divider">|</span>
           <Link to={"/namespaces/"+ this.props.params.namespace +"/services"}>Services</Link>
         </div>
+
+
+        {this.state.error &&
+          <div className="bg-danger">{ this.state.error }</div>
+        }
+
         <div className="col-md-12 code log">
           {this.state.log}
         </div>
