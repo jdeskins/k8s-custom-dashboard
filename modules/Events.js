@@ -28,11 +28,8 @@ export default React.createClass({
 
 
   componentWillReceiveProps: function (nextProps) {
-    console.log('nextProps.params.namespace=' + nextProps.params.namespace
-      + '\nthis.props.params.namespace=' + this.props.params.namespace);
     // Only load if params have changed
     if (nextProps.params.namespace != this.props.params.namespace) {
-      console.log('clearInterval');
       clearInterval(timer);
       var namespace = nextProps.params.namespace;
       this.setState({namespace: namespace});
