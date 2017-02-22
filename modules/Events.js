@@ -16,6 +16,18 @@ var getClassFromType = function(type) {
   return className;
 };
 
+
+var displayInvolvedObject = function(involvedObject) {
+  var html;
+  if (involvedObject.kind == 'Pod') {
+    html = <Link to={"/namespaces/"+ involvedObject.namespace +"/pods/"+ involvedObject.name}>Pod {involvedObject.name}</Link>;
+  } else {
+    html = involvedObject.kind + ' ' + involvedObject.name;
+  }
+  return html;
+};
+
+
 class WarningCount extends React.Component {
   constructor(props) {
     super(props);
@@ -154,7 +166,7 @@ export default React.createClass({
           {this.state.events.map(event =>
             <tr key={event.metadata.uid} className={getClassFromType(event.type)}>
               <td><Link to={"/namespaces/"+ event.metadata.namespace +"/events"}>{event.metadata.namespace}</Link></td>
-              <td>{event.involvedObject.kind} {event.involvedObject.name}</td>
+              <td>{displayInvolvedObject(event.involvedObject)}</td>
               <td>{event.reason}</td>
               <td>{event.message}</td>
               <td>{event.count}</td>
