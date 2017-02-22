@@ -9,13 +9,15 @@ export default React.createClass({
       pod: {},
       name: "",
       podText: "",
-      containers: []
+      containers: [],
+      error: ""
     }
   },
 
 
   componentDidMount: function() {
     const url = '/api/v1/namespaces/' + this.props.params.namespace + '/pods/' + this.props.params.name;
+    const _this = this;
     axios.get(url)
       .then(res => {
         const pod = res.data;
@@ -25,6 +27,12 @@ export default React.createClass({
           podText: JSON.stringify(pod, null, 4),
           containers: pod.spec.containers
         });
+      })
+      .catch(function (error) {
+        if (error.response.status == 404) {
+          const message = 'Pod: ' + _this.props.params.name + ' is not found.  The pod may have been killed.';
+          _this.setState({ error: message,  name: _this.props.params.name });
+        }
       });
   },
 
@@ -49,6 +57,10 @@ export default React.createClass({
           <Link to={"/namespaces/"+ this.props.params.namespace +"/pods"}>Pods</Link> <span className="divider">|</span>
           <Link to={"/namespaces/"+ this.props.params.namespace +"/services"}>Services</Link>
         </div>
+
+        {this.state.error &&
+          <div className="bg-danger">{ this.state.error }</div>
+        }
         <div className="col-md-12 code">
           {this.state.podText}
         </div>
