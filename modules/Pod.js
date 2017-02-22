@@ -29,10 +29,13 @@ export default React.createClass({
         });
       })
       .catch(function (error) {
+        var message;
         if (error.response.status == 404) {
-          const message = 'Pod: ' + _this.props.params.name + ' is not found.  The pod may have been killed.';
-          _this.setState({ error: message,  name: _this.props.params.name });
+          message = 'Pod: ' + _this.props.params.name + ' is not found.  The pod may have been killed.';
+        } else {
+          message = 'There was a problem retrieving this Pod';
         }
+        _this.setState({ error: message,  name: _this.props.params.name });
       });
   },
 
