@@ -33,7 +33,12 @@ kubectl proxy --www=.
 ```
 
 Open browser to <http://localhost:8001/static/> to see the custom dashboard.
-The default port is 8001. 
+The default port is 8001.
+ 
+A helper script is also available.  To start the proxy from the script, run:
+```
+./proxy.sh
+```
 
 
 ## Proxy Kubernetes API Server
