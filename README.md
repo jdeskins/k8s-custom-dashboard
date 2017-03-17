@@ -2,8 +2,6 @@
 
 Run locally with html and javascript.  Connect to your cluster simply using kubectl proxy.
 
-## Run Custom Kubernetes Dashboard Locally
-
 ![Screenshot](screenshot.jpg)
 
 View:
