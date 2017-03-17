@@ -120,12 +120,21 @@ pre {font-size:0.8em;}
 .node   {
     border-radius: 10px;
     background-color: #607D8B;
+    color: #ddd;
     padding: 6px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 .node .name {
     color: #fff;
     padding: 5px;
+}
+.health .node   {
+    border-radius: 10px;
+    background-color: #333;
+    color: #ddd;
+    padding: 6px;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
 }
 .pod {
     background-color: #eeeeef;
@@ -166,4 +175,17 @@ pre {font-size:0.8em;}
 }
 #warnings h3    {
     margin-top: 3px;
+}
+.bar-container  {
+    width: 500px;
+    border:1px solid #333;
+    background-color: #111;
+}
+.bar-container .cpu-bar {
+    background-color: #2e6da4;
+    height: 16px;
+}
+.bar-container .mem-bar {
+    background-color: #50A483;
+    height: 16px;
 }

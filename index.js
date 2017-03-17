@@ -8,6 +8,7 @@ import Events from './modules/Events'
 import Home from './modules/Home'
 import Log from './modules/Log'
 import Namespaces from './modules/Namespaces'
+import NodeHealth from './modules/NodeHealth'
 import Pod from './modules/Pod'
 import Pods from './modules/Pods'
 import PodsByLabel from './modules/PodsByLabel'
@@ -27,6 +28,7 @@ render((
       <Route path="/namespaces/:namespace/pods/:name/log" component={Log}/>
       <Route path="/namespaces/:namespace/pods" component={Pods}/>
       <Route path="/namespaces/:namespace/services" component={Services}/>
+      <Route path="/nodes" component={NodeHealth}/>
       <Route path="/pods" component={Pods}/>
       <Route path="/pods/label/:labelkey/:labelvalue" component={PodsByLabel}/>
       <Route path="/services" component={Services}/>

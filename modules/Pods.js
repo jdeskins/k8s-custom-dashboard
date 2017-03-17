@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import axios from 'axios';
 import moment from 'moment';
 import { Link } from 'react-router'
+import CPU from './elements/CPU'
+import Memory from './elements/Memory'
 import Pod from './elements/Pod'
 
 
@@ -53,7 +55,9 @@ export default React.createClass({
       title: 'Pods',
       warnings: [],
       namespace: '',
-      refreshValue: '0'
+      refreshValue: '0',
+      nodesByName: {},
+      nodeHealth: {}
     }
   },
 
@@ -102,8 +106,54 @@ export default React.createClass({
   },
 
 
+  loadNodeHealth: function() {
+    const url = '/api/v1/nodes';
+    const nodeHealthUrl = '/api/v1/namespaces/kube-system/services/heapster/proxy/apis/metrics/v1alpha1/nodes';
+    const _this = this;
+
+    // Load Nodes
+    axios.get(url)
+      .then(res => {
+        var nodes = [];
+        if (res.data.items) {
+          nodes = res.data.items.sort(function(a, b) {
+            if(a.metadata.name < b.metadata.name) return -1;
+            if(a.metadata.name > b.metadata.name) return 1;
+            return 0;
+          });
+        }
+
+        var nodesByName = {};
+        nodes.map(function(node){
+          nodesByName[node.metadata.name] = node;
+        });
+
+        this.setState({
+          nodesByName: nodesByName
+        });
+
+        // Load Node health
+        axios.get(nodeHealthUrl)
+          .then(res => {
+            var nodeHealth = {};
+            if (res.data.items) {
+              const nodes = res.data.items;
+              nodes.map(function(node){
+                nodeHealth[node.metadata.name] = node;
+              });
+            }
+            _this.state.nodeHealth = nodeHealth;
+            _this.forceUpdate();
+          });
+
+      });
+  },
+
+
   loadDocument: function(namespace) {
     var url, title;
+
+    this.loadNodeHealth();
 
     if (namespace) {
       url = '/api/v1/namespaces/' + namespace + '/pods';
@@ -167,6 +217,8 @@ export default React.createClass({
 
 
   render() {
+    const nodeHealth = this.state.nodeHealth;
+
     return (
       <div>
         <h1>{this.state.title}</h1>
@@ -216,13 +268,19 @@ export default React.createClass({
         }
 
 
-        {Object.keys(this.state.podsByNodes).map( node =>
-          <div key={node} className="row">
+        {Object.keys(this.state.podsByNodes).map( nodeName =>
+          <div key={nodeName} className="row">
             <div className="col-md-12 node-container">
               <div className="node row">
-                <div className="name">NODE: {node}</div>
+                <div className="name">NODE: {nodeName}</div>
+                {nodeHealth[nodeName] &&
+                  <div>
+                    <CPU node={this.state.nodesByName[nodeName]} usage={nodeHealth[nodeName].usage} />
+                    <Memory node={this.state.nodesByName[nodeName]} usage={nodeHealth[nodeName].usage} />
+                  </div>
+                }
 
-                {this.state.podsByNodes[node].map(pod =>
+                {this.state.podsByNodes[nodeName].map(pod =>
                   <div className="col-md-3" key={pod.metadata.name}>
                     <Pod pod={pod} />
                   </div>
