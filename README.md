@@ -1,5 +1,6 @@
-# k8s-custom-dashboard
+# Kubernetes Custom Dashboard
 
+Run locally with html and javascript.  Connect to your cluster simply using kubectl proxy.
 
 ## Run Custom Kubernetes Dashboard Locally
 
@@ -10,6 +11,7 @@ View:
 * Events
 * Pods running on Nodes
 * Pods by Namespace or Label
+* Node CPU and Memory
 
 This project will create the necessary html and javascript files 
 to run the dashboard on your local machine.
