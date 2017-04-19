@@ -90,7 +90,9 @@ export default React.createClass({
     return (
       <div className="pod">
         <b>POD: <Link to={"/namespaces/"+ pod.metadata.namespace +"/pods/" + pod.metadata.name}>{pod.metadata.name}</Link></b><br/>
-        {pod.spec.containers[0].image}<br/>
+        {pod.spec.containers.map(container =>
+          <div>{container.image}</div>
+        )}
         <div className={pod.status.phase.toLowerCase()}>
           Status: {pod.status.phase} &nbsp;
           <span className={getRestartStyle(restartCount)}>({restartCount} restarts)</span>
