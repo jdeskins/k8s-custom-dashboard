@@ -7,12 +7,12 @@ import Deployments from './modules/Deployments'
 import Events from './modules/Events'
 import Home from './modules/Home'
 import Log from './modules/Log'
-import Metrics from './modules/Metrics'
 import Namespaces from './modules/Namespaces'
 import NodeHealth from './modules/NodeHealth'
 import Pod from './modules/Pod'
 import Pods from './modules/Pods'
 import PodsByLabel from './modules/PodsByLabel'
+import Scaling from './modules/Scaling'
 import Services from './modules/Services'
 
 
@@ -23,7 +23,6 @@ render((
       <Route path="/about" component={About}/>
       <Route path="/deployments" component={Deployments}/>
       <Route path="/events" component={Events}/>
-      <Route path="/metrics" component={Metrics}/>
       <Route path="/namespaces" component={Namespaces}/>
       <Route path="/namespaces/:namespace/events" component={Events}/>
       <Route path="/namespaces/:namespace/pods/:name" component={Pod}/>
@@ -33,6 +32,8 @@ render((
       <Route path="/nodes" component={NodeHealth}/>
       <Route path="/pods" component={Pods}/>
       <Route path="/pods/label/:labelkey/:labelvalue" component={PodsByLabel}/>
+      <Route path="/scaling" component={Scaling}/>
+      <Route path="/scaling/:namespace/:appname" component={Scaling}/>
       <Route path="/services" component={Services}/>
     </Route>
   </Router>

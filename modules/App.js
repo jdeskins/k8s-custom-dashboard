@@ -34,6 +34,7 @@ export default React.createClass({
               <li><NavLink to="/events">Events</NavLink></li>
               <li><NavLink to="/nodes">Nodes</NavLink></li>
               <li><NavLink to="/pods">Pods</NavLink></li>
+              <li><NavLink to="/scaling">Scaling</NavLink></li>
             </ul>
           </section>
         </div>
