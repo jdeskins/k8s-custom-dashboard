@@ -222,12 +222,12 @@ export default React.createClass({
               <div className="form-group">
                 <label className="sr-only" htmlFor="namespace">Namespace</label>
                 <input type="text" className="form-control" id="namespace" ref="namespace"
-                       value="product-uat" placeholder="Namespace" />
+                       placeholder="Namespace" />
               </div>
               <div className="form-group">
                 <label className="sr-only" htmlFor="appname">Application Name</label>
                 <input type="text" className="form-control" id="appname" ref="appname"
-                       value="productavailability" placeholder="Application Name" />
+                       placeholder="Application Name" />
               </div>
               <button type="submit" className="btn btn-default">Go</button>
             </form>
