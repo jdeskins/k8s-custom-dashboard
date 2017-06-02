@@ -7,6 +7,7 @@ import Deployments from './modules/Deployments'
 import Events from './modules/Events'
 import Home from './modules/Home'
 import Log from './modules/Log'
+import Metrics from './modules/Metrics'
 import Namespaces from './modules/Namespaces'
 import NodeHealth from './modules/NodeHealth'
 import Pod from './modules/Pod'
@@ -22,6 +23,7 @@ render((
       <Route path="/about" component={About}/>
       <Route path="/deployments" component={Deployments}/>
       <Route path="/events" component={Events}/>
+      <Route path="/metrics" component={Metrics}/>
       <Route path="/namespaces" component={Namespaces}/>
       <Route path="/namespaces/:namespace/events" component={Events}/>
       <Route path="/namespaces/:namespace/pods/:name" component={Pod}/>
