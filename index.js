@@ -6,6 +6,7 @@ import About from './modules/About'
 import Deployments from './modules/Deployments'
 import Events from './modules/Events'
 import Home from './modules/Home'
+import HPAs from './modules/HPAs'
 import Log from './modules/Log'
 import Namespaces from './modules/Namespaces'
 import NodeHealth from './modules/NodeHealth'
@@ -32,7 +33,7 @@ render((
       <Route path="/nodes" component={NodeHealth}/>
       <Route path="/pods" component={Pods}/>
       <Route path="/pods/label/:labelkey/:labelvalue" component={PodsByLabel}/>
-      <Route path="/scaling" component={Scaling}/>
+      <Route path="/scaling" component={HPAs}/>
       <Route path="/scaling/:namespace/:appname" component={Scaling}/>
       <Route path="/services" component={Services}/>
     </Route>

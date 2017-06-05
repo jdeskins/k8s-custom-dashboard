@@ -214,26 +214,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Scaling</h1>
-
-        {!this.state.namespace &&
-          <div>
-            <h2>Enter namespace and application name</h2>
-            <form className="form-inline" onSubmit={this.handleSubmit}>
-              <div className="form-group">
-                <label className="sr-only" htmlFor="namespace">Namespace</label>
-                <input type="text" className="form-control" id="namespace" ref="namespace"
-                       placeholder="Namespace" />
-              </div>
-              <div className="form-group">
-                <label className="sr-only" htmlFor="appname">Application Name</label>
-                <input type="text" className="form-control" id="appname" ref="appname"
-                       placeholder="Application Name" />
-              </div>
-              <button type="submit" className="btn btn-default">Go</button>
-            </form>
-          </div>
-        }
+        <h1>Pod Auto-Scaling</h1>
 
         {this.state.namespace &&
         <div>
@@ -295,13 +276,6 @@ export default React.createClass({
               </tr>
               </tbody>
             </table>
-
-            {!this.state.hasHPA &&
-              <div>
-                <h3 className="text-center">No Horizontal Scaling found</h3>
-              </div>
-            }
-
           </div>
 
           <div className="col-md-12">
