@@ -130,7 +130,7 @@ export default React.createClass({
     const _this = this;
 
     // Get HPA
-    axios.get('/apis/extensions/v1beta1/namespaces/' + namespace + '/horizontalpodautoscalers/productavailability')
+    axios.get('/apis/extensions/v1beta1/namespaces/' + namespace + '/horizontalpodautoscalers/' + appname)
       .then(res => {
         this.setState({
           hpa: res.data,
@@ -140,6 +140,7 @@ export default React.createClass({
       .catch(function (error) {
         console.log(error);
         _this.setState({
+          hpa: {},
           hasHPA: false
         })
       });
