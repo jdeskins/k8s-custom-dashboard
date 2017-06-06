@@ -221,7 +221,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>Pod Auto-Scaling</h1>
+        <h1>Pod Auto-Scaling: {this.state.deploymentName}</h1>
 
         {this.state.namespace &&
         <div>
