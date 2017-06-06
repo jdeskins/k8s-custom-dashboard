@@ -50,7 +50,7 @@ export default React.createClass({
       filteredPods: [],
       refreshValue: '0',
       namespace: '',
-      appname: '',
+      deploymentName: '',
       hasHPA: true
     }
   },
@@ -58,21 +58,24 @@ export default React.createClass({
 
   componentWillReceiveProps: function (nextProps) {
     console.log('In componentWillReceiveProps...');
+    console.log('nextProps.params.namespace=' + nextProps.params.namespace);
+    console.log('this.props.params.namespace=' + this.props.params.namespace);
+
     // Only load if params have changed
     if (!nextProps.params.namespace
       || nextProps.params.namespace != this.props.params.namespace
-      || nextProps.params.appname != this.props.params.appname) {
+      || nextProps.params.deploymentName != this.props.params.deploymentName) {
 
       clearInterval(timer);
       let namespace = nextProps.params.namespace;
-      let appname = nextProps.params.appname;
-      this.setState({namespace: namespace, appname: appname});
-      if (namespace && appname) {
-        this.loadDocument(namespace, appname);
+      let deploymentName = nextProps.params.deploymentName;
+      this.setState({namespace: namespace, deploymentName: deploymentName});
+      if (namespace && deploymentName) {
+        this.loadDocument(namespace, deploymentName);
         let refreshValue = this.state.refreshValue;
         if (refreshValue != undefined && refreshValue != '0') {
           const refreshInterval = parseInt(refreshValue) * 1000;
-          this.startRefresh(refreshInterval, namespace, appname);
+          this.startRefresh(refreshInterval, namespace, deploymentName);
         }
       }
     }
@@ -86,12 +89,12 @@ export default React.createClass({
   },
 
 
-  startRefresh: function(refreshInterval, namespace, appname) {
-    console.log('In startRefresh for: namespace=' + namespace + ' appname=' + appname);
+  startRefresh: function(refreshInterval, namespace, deploymentName) {
+    console.log('In startRefresh for: namespace=' + namespace + ' deploymentName=' + deploymentName);
     let loadDocument = this.loadDocument;
     timer = setInterval(function(x, y) {
       loadDocument(x, y);
-    }, refreshInterval, namespace, appname);
+    }, refreshInterval, namespace, deploymentName);
   },
 
 
@@ -102,7 +105,7 @@ export default React.createClass({
       clearInterval(timer);
     } else {
       const refreshInterval = parseInt(refreshValue) * 1000;
-      this.startRefresh(refreshInterval, this.state.namespace, this.state.appname);
+      this.startRefresh(refreshInterval, this.state.namespace, this.state.deploymentName);
     }
   },
 
@@ -110,27 +113,27 @@ export default React.createClass({
   handleSubmit(event) {
     event.preventDefault();
     const namespace = this.refs.namespace.value;
-    const appname = this.refs.appname.value;
+    const deploymentName = this.refs.deploymentName.value;
     this.setState({
       namespace: namespace,
-      appname: appname
+      deploymentName: deploymentName
     });
-    browserHistory.push('/static/#/scaling/' + namespace + '/' + appname);
-    this.loadDocument(namespace, appname);
+    browserHistory.push('/static/#/scaling/' + namespace + '/' + deploymentName);
+    this.loadDocument(namespace, deploymentName);
   },
 
 
-  loadDocument: function(namespace, appname) {
-    console.log('In Scaling: loadDocument... namespace: ' + namespace + ' appname: ' + appname);
-    if (!namespace || !appname) {
-      console.log('Missing params in loadDocument: ' + namespace + '; ' + appname);
+  loadDocument: function(namespace, deploymentName) {
+    console.log('In Scaling: loadDocument... namespace: ' + namespace + ' deploymentName: ' + deploymentName);
+    if (!namespace || !deploymentName) {
+      console.log('Missing params in loadDocument: ' + namespace + '; ' + deploymentName);
       return;
     }
 
     const _this = this;
 
     // Get HPA
-    axios.get('/apis/extensions/v1beta1/namespaces/' + namespace + '/horizontalpodautoscalers/' + appname)
+    axios.get('/apis/extensions/v1beta1/namespaces/' + namespace + '/horizontalpodautoscalers/' + deploymentName)
       .then(res => {
         this.setState({
           hpa: res.data,
@@ -159,7 +162,7 @@ export default React.createClass({
             if (events[i].type === 'Warning') {
               warningCount += 1;
             }
-            if (events[i].involvedObject.name.startsWith(appname)) {
+            if (events[i].involvedObject.name.startsWith(deploymentName)) {
               filteredEvents.push(events[i]);
             }
           }
@@ -181,7 +184,8 @@ export default React.createClass({
           });
 
           for (let i = 0; i < pods.length; i++) {
-            if (pods[i].metadata.labels.app === appname) {
+            // TODO: don't rely on label
+            if (pods[i].metadata.labels.app === deploymentName) {
               filteredPods.push(pods[i]);
             }
           }
@@ -198,15 +202,18 @@ export default React.createClass({
 
   componentDidMount: function() {
     let namespace = this.props.params.namespace;
-    let appname = this.props.params.appname;
+    let deploymentName = this.props.params.deploymentName;
+
+    console.log('namespace=' + namespace);
+    console.log('deploymentName=' + deploymentName);
 
     this.setState({
       namespace: namespace,
-      appname: appname
+      deploymentName: deploymentName
     });
 
-    if (namespace && appname) {
-      this.loadDocument(namespace, appname);
+    if (namespace && deploymentName) {
+      this.loadDocument(namespace, deploymentName);
     }
   },
 
@@ -280,6 +287,7 @@ export default React.createClass({
 
           <div className="col-md-12">
             <h2>Events</h2>
+            <small><u>Most recent at top</u></small>
             <table className="table table-striped table-bordered table-hover table-condensed">
               <thead>
               <tr>

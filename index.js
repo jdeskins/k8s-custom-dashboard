@@ -34,7 +34,8 @@ render((
       <Route path="/pods" component={Pods}/>
       <Route path="/pods/label/:labelkey/:labelvalue" component={PodsByLabel}/>
       <Route path="/scaling" component={HPAs}/>
-      <Route path="/scaling/:namespace/:appname" component={Scaling}/>
+      <Route path="/scaling/:namespace" component={HPAs}/>
+      <Route path="/scaling/:namespace/:deploymentName" component={Scaling}/>
       <Route path="/services" component={Services}/>
     </Route>
   </Router>
