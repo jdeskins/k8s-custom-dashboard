@@ -115,10 +115,13 @@ export default React.createClass({
         var events = [];
         var warningCount = 0;
         if (res.data.items) {
-          events = res.data.items.sort(function(a, b) {return a.lastTimestamp.localeCompare(b.lastTimestamp);});
+          // Sort descending
+          events = res.data.items.sort(function(a, b) {
+            return b.lastTimestamp.localeCompare(a.lastTimestamp);}
+            );
           const eventsLength = events.length;
           for (var i = 0; i < eventsLength; i++) {
-            if (events[i].type == 'Warning') {
+            if (events[i].type === 'Warning') {
               warningCount += 1;
             }
           }
