@@ -145,7 +145,8 @@ export default React.createClass({
           <label>Refresh Interval:</label>
           <select name="refreshInterval" onChange={this.handleRefreshChange}>
             <option value="0">No Refresh</option>
-            <option value="2">2 seconds</option>
+            <option value="10">10 seconds</option>
+            <option value="30">30 seconds</option>
             <option value="60">1 minute</option>
             <option value="600">10 minutes</option>
           </select>
