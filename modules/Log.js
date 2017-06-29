@@ -29,18 +29,20 @@ export default React.createClass({
 
 
   loadDocument: function(namespace, podName, container) {
+    // TODO: Research using params for paging
+    // ?referenceLineNum=-1&referenceTimestamp=2017-02-28T20:46:15.811118529Z&relativeFrom=2000000000&relativeTo=2000000100
     const url = '/api/v1/namespaces/' + namespace + '/pods/' + podName + '/log?container=' + container;
     const _this = this;
     axios.get(url)
       .then(res => {
         var log = res.data;
-        if (log == "") {
+        if (log === "") {
           log = "(empty)";
         }
         _this.setState({ container: container, log: log, name: podName });
       })
       .catch(function (error) {
-        if (error.response.status == 400) {
+        if (error.response.status === 400) {
           const message = error.response.data.message;
           console.log('message=' + message);
           _this.setState({ error: message,  name: podName });
@@ -53,6 +55,7 @@ export default React.createClass({
     const namespace = this.props.params.namespace;
     const podName = this.props.params.name;
     const container = this.props.location.query.container;
+    this.setState({ container: container, name: podName });
     this.loadDocument(namespace, podName, container);
   },
 
@@ -63,19 +66,6 @@ export default React.createClass({
         <h1>Log for Pod: <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/"+ this.state.name}>{this.state.name}</Link></h1>
         {this.state.container &&
           <h3>Container: {this.state.container}</h3>
-        }
-
-        {this.state.containers.length > 0 &&
-          <div className="bg-warning">
-            <b>This pod has the following containers.  Select one to view the logs.</b>
-            <ul>
-            {this.state.containers.map( container =>
-              <li key={container}>
-                <Link to={"/namespaces/"+ this.props.params.namespace +"/pods/" + this.state.name + "/log?container=" + container}>{ container }</Link>
-              </li>
-            )}
-            </ul>
-          </div>
         }
 
         <div>
