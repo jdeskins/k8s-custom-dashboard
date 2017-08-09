@@ -189,3 +189,7 @@ pre {font-size:0.8em;}
     background-color: #50A483;
     height: 16px;
 }
+
+.scrollable {
+    overflow: auto;
+}

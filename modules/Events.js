@@ -139,7 +139,7 @@ export default React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="scrollable">
         <h1>{this.state.title} ({this.state.events.length})</h1>
         <form>
           <label>Refresh Interval:</label>
