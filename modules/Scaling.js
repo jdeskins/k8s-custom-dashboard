@@ -133,7 +133,7 @@ export default React.createClass({
     const _this = this;
 
     // Get HPA
-    axios.get('/apis/extensions/v1beta1/namespaces/' + namespace + '/horizontalpodautoscalers/' + deploymentName)
+    axios.get('/apis/autoscaling/v1/namespaces/' + namespace + '/horizontalpodautoscalers/' + deploymentName)
       .then(res => {
         this.setState({
           hpa: res.data,

@@ -47,7 +47,7 @@ export default React.createClass({
 
     _this.setState({ autoscalers });
 
-    axios.get('/apis/extensions/v1beta1/namespaces/' + namespace + '/horizontalpodautoscalers')
+    axios.get('/apis/autoscaling/v1/namespaces/' + namespace + '/horizontalpodautoscalers')
       .then(response => {
         _this.setState({ isLoading: false });
         console.log(response.data);
